@@ -62,6 +62,11 @@ namespace Web.Util
         }
 
         //A entrada é um vetor com uma linha de pixels da imagem e a saída é a mesma linha já equalizada.
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="extension"></param>
+        /// <returns></returns>
         //private double[] EquilizarNoAlgoritmoDaP1(double[] vetorEntrada)
         //{
         //    int current = 0;
