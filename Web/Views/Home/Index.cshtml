@@ -1,0 +1,45 @@
+﻿@model Web.Models.UploadViewModel
+@{
+    ViewBag.Title = "Trabalho P1";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<header class="text-white text-center">
+    <h1 class="display-4">Processamento de imagem</h1>
+    <p class="lead mb-0">Trabalho P1</p>
+    <img src="@Url.Content("~/Content/Imagem/image_pxlho1.svg")" alt="" width="150" class="mb-4">
+</header>
+@using (Html.BeginForm("Index", "Home", FormMethod.Post, new { enctype = "multipart/form-data", @role = "form" }))
+{
+    <div class="row py-4">
+        <div class="col-lg-6 mx-auto">
+            <div class="input-group mb-3 px-2 py-2 rounded-pill bg-white shadow-sm">
+                <input id="upload" type="file" name="file" class="form-control border-0">
+                <label id="upload-label" for="upload" class="font-weight-light text-muted">Selecione imagem</label>
+                <div class="input-group-append">
+                    <label for="upload" class="btn btn-light m-0 rounded-pill px-4">
+                        <i class="fa fa-cloud-upload mr-2 text-muted"></i>
+                        <small class="text-uppercase font-weight-bold text-muted">Selecione imagem</small>
+                    </label>
+                </div>
+            </div>
+            <p class="font-italic text-white text-center">A imagem enviada será renderizada dentro da caixa abaixo.</p>
+            <input type="hidden" value="@(Model !=null ? "1" : "0")" id="hidden_imagemequilizada" />
+
+            <div class="image-area mt-4" id="divoriginal" style="display:none;">
+                <img id="imagem" src="#" alt="" class="img-fluid rounded shadow-sm mx-auto d-block">
+            </div>
+
+            @if (Model != null)
+            {
+                <div class="image-area mt-4" id="divequilizada">
+                    <img id="imageResult1" src="@Url.Content($"~/Uploads/{Model.ImagemOriginal}")" alt="Imagem Original" class="img-fluid rounded imgequillizada shadow-sm d-block">
+                    <img id="imageResult2" src="@Url.Content($"~/Uploads/{Model.ImagemEquilizada}")" alt="Imagem Equilizada" class="img-fluid rounded shadow-sm mx-auto d-block">
+                </div>
+            }
+            <div class="form-group noleftpadding" id="divbutton" style="display:none;">
+                <input type="submit" value="Equilizar imagem" style="margin-left:40%; margin-top:10px;" id="btn_enviarimagem" class="text-uppercase font-weight-bold text-muted btn_enviarimagem" />
+            </div>
+        </div>
+    </div>
+}
+<script src="~/Content/scripts/pagina/Home.js"></script>
