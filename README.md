@@ -3,3 +3,6 @@ O trabalho consiste em construir um algoritmo de equalização de imagem em qual
 
 # Url projeto em funcionamento:
 https://processamentoimagemp1.azurewebsites.net
+
+# Url para o algoritmo no projeto:
+https://github.com/CristianoMotta/ProcesssamentoImagem/blob/master/Web/Util/AlgoritmoEqualizacao.cs
