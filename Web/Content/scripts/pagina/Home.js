@@ -12,6 +12,8 @@
         $.unblockUI();
     }
 
+    BloquearTela();
+
     if ($("#hidden_imagemequilizada").val() == "0") {
         $("#divoriginal").show();
     }
@@ -55,9 +57,13 @@
     input.addEventListener('change', ExibirDadosArquivo);
 
     function ExibirDadosArquivo(e) {
-        var fileName =  e.srcElement.files[0].name;
+        var fileName = e.srcElement.files[0].name;
         infoArea.textContent = 'Nome arquivo: ' + fileName;
     }
+
+    $(document).ready(function () {
+        DesbloquearTela();
+    });
 
 })(window.pagHome = window.pagHome || {}, jQuery);
 
