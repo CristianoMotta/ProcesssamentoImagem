@@ -58,7 +58,6 @@ namespace Web.Util
                     resultadoEqualizacao[atual + 3] = 255;
                 }
             }
-
             //FIM ALGORITMO P1
 
             //GERAR IMAGEM NOVA
