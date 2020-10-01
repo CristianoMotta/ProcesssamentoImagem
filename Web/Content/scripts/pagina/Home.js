@@ -47,6 +47,7 @@
 
         $(document).on('click', '.btn_enviarimagem', function () {
             BloquearTela();
+
             return true;
         })
     });
