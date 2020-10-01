@@ -10,24 +10,37 @@ https://github.com/CristianoMotta/ProcesssamentoImagem/blob/master/Web/Util/Algo
 int atual = 0;
 
 byte[] resultadoEqualizacao = new byte[bytes];
+
 double[] pn = new double[256];
 
 for (int pi = 0; pi < bytes; pi += 4)
+
 {
+
     pn[vetorDePixels[pi]]++;
+    
 }
 
 for (int prob = 0; prob < pn.Length; prob++)
+
 {
+
     pn[prob] /= (largura * altura);
+    
 }
 
 for (int y = 0; y < altura; y++)
+
 {
+
     for (int x = 0; x < largura; x++)
+    
     {
+    
         atual = y * sd.Stride + x * 4;
+        
         double sum = 0;
+        
         for (int i = 0; i < vetorDePixels[atual]; i++)
         {
             sum += pn[i];
