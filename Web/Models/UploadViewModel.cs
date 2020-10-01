@@ -4,5 +4,6 @@
     {
         public string ImagemOriginal { get; set; }
         public string ImagemEquilizada { get; set; }
+        public string Mensagem { get; set; }
     }
 }

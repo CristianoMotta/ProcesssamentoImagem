@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
-using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Web.Models;
@@ -19,6 +16,12 @@ namespace Web.Controllers
             return View();
         }
 
+
+        /// <summary>
+        /// Metodo recebe a imagem original, salvar essa imagem em uma pasta do projeto e envia para equilização.
+        /// </summary>
+        /// <param>Imagem</param>
+        /// <returns>Retorna 2 imagens, a imagem original e imagem equalizada.</returns>
         [HttpPost]
         public ActionResult Index(UploadViewModel model)
         {
@@ -29,29 +32,37 @@ namespace Web.Controllers
                 if (Request.Files.Count > 0)
                 {
                     HttpPostedFileBase file = Request.Files[0];
+
                     if (file.ContentLength > 0)
                     {
-                        var arquivoOriginal = Path.GetFileName(file.FileName);
-
-                        modeloRetorno = new UploadViewModel()
+                        if (MvcUtil.ValidarArquivoImagem(file.InputStream))
                         {
-                            ImagemOriginal = $"img_{DateTime.Now.Ticks}{Path.GetExtension(file.FileName).ToLower()}",
-                            ImagemEquilizada = $"img_{DateTime.Now.Ticks}_equilizada{Path.GetExtension(file.FileName).ToLower()}"
-                        };
+                            var arquivoOriginal = Path.GetFileName(file.FileName);
 
-                        string imagemOriginal = Path.Combine(Server.MapPath("~/Uploads"), modeloRetorno.ImagemOriginal);
-                        string imagemEquilizada = Path.Combine(Server.MapPath("~/Uploads"), modeloRetorno.ImagemEquilizada);
+                            modeloRetorno = new UploadViewModel()
+                            {
+                                ImagemOriginal = $"img_{DateTime.Now.Ticks}{Path.GetExtension(file.FileName).ToLower()}",
+                                ImagemEquilizada = $"img_{DateTime.Now.Ticks}_equilizada{Path.GetExtension(file.FileName).ToLower()}"
+                            };
 
-                        //SALVAR IMAGEM ORIGINAL
-                        file.SaveAs(imagemOriginal);
+                            string imagemOriginal = Path.Combine(Server.MapPath("~/Uploads"), modeloRetorno.ImagemOriginal);
+                            string imagemEquilizada = Path.Combine(Server.MapPath("~/Uploads"), modeloRetorno.ImagemEquilizada);
 
-                        Bitmap imageOriginal = new Bitmap(file.InputStream);
+                            //SALVAR IMAGEM ORIGINAL
+                            file.SaveAs(imagemOriginal);
 
-                        //EQUILIZAR 
-                        var imageEqualizada = MvcUtil.EqualizarImagem(imageOriginal);
+                            Bitmap imageOriginal = new Bitmap(file.InputStream);
 
-                        //SALVAR IMAGEM EQUILIZADA
-                        imageEqualizada.Save(imagemEquilizada, MvcUtil.GetExtensionFromImageFormat(Path.GetExtension(file.FileName).ToLower()));
+                            //EQUILIZAR 
+                            var imageEqualizada = AlgoritmoEqualizacao.EqualizarImagem(imageOriginal);
+
+                            //SALVAR IMAGEM EQUILIZADA
+                            imageEqualizada.Save(imagemEquilizada, MvcUtil.RecuperarFormatoImagem(Path.GetExtension(file.FileName).ToLower()));
+                        }
+                        else
+                        {
+                            modeloRetorno.Mensagem = "O arquivo não e do tipo imagem.";
+                        }
                     }
                 }
             }
