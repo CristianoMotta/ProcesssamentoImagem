@@ -14,11 +14,8 @@ byte[] resultadoEqualizacao = new byte[bytes];
 double[] pn = new double[256];
 
 for (int pi = 0; pi < bytes; pi += 4)
-
 {
-
     pn[vetorDePixels[pi]]++;
-    
 }
 
 for (int prob = 0; prob < pn.Length; prob++)
